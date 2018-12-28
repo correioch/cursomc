@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.ch.cursomc.domain.enums.TypeClient;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Client implements Serializable {
@@ -29,6 +30,7 @@ public class Client implements Serializable {
 	private String codIdentification;
 	private Integer typeClient;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="client")
 	private List<Adresse> adresses = new ArrayList<>();
 	@ElementCollection

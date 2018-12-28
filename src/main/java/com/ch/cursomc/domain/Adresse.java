@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Adresse implements Serializable {
 	
@@ -26,9 +28,14 @@ public class Adresse implements Serializable {
 	@JoinColumn(name="ville_id")
 	Ville ville;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="client_id")
 	private Client client;
+	
+	public Adresse() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Adresse(Integer id, String rue, String numero, String complement, String cartier, String cep,
 			Client client, Ville ville) {
