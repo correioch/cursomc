@@ -8,50 +8,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Category implements Serializable {
-	
+public class Province implements Serializable{
+
 	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
+	private String nom;
 	
-	@JsonBackReference
-	@ManyToMany(mappedBy = "categories")
-	private List <Product> products = new ArrayList<>();
+	@OneToMany(mappedBy="province")
+	List <Ville> villes = new ArrayList<>();
 	
-	public Category() {
-		
+	public Province() {
+
 	}
-	
-	public Category(Integer id, String nome) {
+
+	public Province(Integer id, String nom) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.nom = nom;
 	}
-
-	
-	public Category(List<Product> products) {
-		super();
-		this.products = products;
-	}
-
-	
-	
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
 
 	public Integer getId() {
 		return id;
@@ -61,12 +40,20 @@ public class Category implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNom() {
+		return nom;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public List<Ville> getVilles() {
+		return villes;
+	}
+
+	public void setVilles(List<Ville> villes) {
+		this.villes = villes;
 	}
 
 	@Override
@@ -85,7 +72,7 @@ public class Category implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Province other = (Province) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -94,13 +81,6 @@ public class Category implements Serializable {
 		return true;
 	}
 	
-	@Override
-	public String toString() {
-		
-		return "id: " + id
-				+ " Nom: " + nome
-				+ " produits: " + products;
-	}
 	
-
+	
 }

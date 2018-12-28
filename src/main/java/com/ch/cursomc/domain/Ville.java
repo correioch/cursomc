@@ -1,57 +1,37 @@
 package com.ch.cursomc.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Category implements Serializable {
+public class Ville implements Serializable{
 	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
+	private String nom;
 	
-	@JsonBackReference
-	@ManyToMany(mappedBy = "categories")
-	private List <Product> products = new ArrayList<>();
-	
-	public Category() {
-		
-	}
-	
-	public Category(Integer id, String nome) {
+	@ManyToOne
+	@JoinColumn(name="province_id")
+	private Province province;
+
+	public Ville(Integer id, String nom, Province province) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.nom = nom;
+		this.province = province;
 	}
-
-	
-	public Category(List<Product> products) {
-		super();
-		this.products = products;
-	}
-
-	
-	
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
 
 	public Integer getId() {
 		return id;
@@ -61,12 +41,20 @@ public class Category implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNom() {
+		return nom;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public Province getProvince() {
+		return province;
+	}
+
+	public void setProvince(Province province) {
+		this.province = province;
 	}
 
 	@Override
@@ -85,7 +73,7 @@ public class Category implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Ville other = (Ville) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -93,14 +81,7 @@ public class Category implements Serializable {
 			return false;
 		return true;
 	}
-	
-	@Override
-	public String toString() {
-		
-		return "id: " + id
-				+ " Nom: " + nome
-				+ " produits: " + products;
-	}
-	
 
+	
+	
 }
