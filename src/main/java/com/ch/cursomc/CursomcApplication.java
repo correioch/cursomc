@@ -1,5 +1,6 @@
 package com.ch.cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.ch.cursomc.domain.Adresse;
 import com.ch.cursomc.domain.Category;
 import com.ch.cursomc.domain.Client;
+import com.ch.cursomc.domain.Commande;
+import com.ch.cursomc.domain.Payment;
+import com.ch.cursomc.domain.PaymentAvecBulletin;
+import com.ch.cursomc.domain.PaymentAvecCarte;
 import com.ch.cursomc.domain.Product;
 import com.ch.cursomc.domain.Province;
 import com.ch.cursomc.domain.Ville;
+import com.ch.cursomc.domain.enums.EtatPayment;
 import com.ch.cursomc.domain.enums.TypeClient;
 import com.ch.cursomc.repositories.AdresseRepository;
 import com.ch.cursomc.repositories.CategoryRepository;
 import com.ch.cursomc.repositories.ClientRepository;
+import com.ch.cursomc.repositories.CommandeRepository;
+import com.ch.cursomc.repositories.PaymentRepository;
 import com.ch.cursomc.repositories.ProductRepository;
 import com.ch.cursomc.repositories.ProvinceRepository;
 import com.ch.cursomc.repositories.VilleRepository;
@@ -26,7 +34,6 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
     private	CategoryRepository categoryRepository;
-
 	@Autowired
     private	ProductRepository productRepository;
 	@Autowired
@@ -37,15 +44,15 @@ public class CursomcApplication implements CommandLineRunner {
     private	ClientRepository clientRepository;
 	@Autowired
     private	AdresseRepository adresseRepository;
-	
+	@Autowired
+    private	CommandeRepository commandeRepository;
+	@Autowired
+    private	PaymentRepository paymentRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
 	}
 
-
-	
-	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -91,6 +98,21 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		clientRepository.saveAll(Arrays.asList(cli1));
 		adresseRepository.saveAll(Arrays.asList(adresse1, adresse2));	
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Commande com1 = new Commande(null, sdf.parse("30/09/2017 10:32"), cli1, adresse1);
+		Commande com2 = new Commande(null, sdf.parse("10/10/2017 19:35"), cli1, adresse2);
+			
+		Payment pay1 = new PaymentAvecCarte(null, EtatPayment.ENLEVE, com1, 6);
+		com1.setPayement(pay1);
+		Payment pay2 = new PaymentAvecBulletin(null, EtatPayment.EN_ATTENTE, com2, sdf.parse("20/10/2017 00:00"), null);
+		com2.setPayement(pay2);
+		cli1.getCommandes().addAll(Arrays.asList(com1, com2));
+		
+		commandeRepository.saveAll(Arrays.asList(com1, com2));
+		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
+		
 		
 	}
 

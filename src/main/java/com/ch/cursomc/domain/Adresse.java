@@ -50,8 +50,6 @@ public class Adresse implements Serializable {
 		this.ville = ville;
 	}
 
-	
-	
 	public Ville getVille() {
 		return ville;
 	}

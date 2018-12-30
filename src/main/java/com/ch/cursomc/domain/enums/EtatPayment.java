@@ -1,18 +1,20 @@
 package com.ch.cursomc.domain.enums;
 
-public enum TypeClient {
+public enum EtatPayment {
 	
-	Personne(1, "Client personnel"),
-	Entreprise(2, "Client Entreprise");
-	
+	EN_ATTENTE(1, "En Attente"),
+	ENLEVE(2, "Enleve"),
+	ANNULE(3, "Annule");
+
 	private int cod;
-	
 	private String description;
 	
-	private TypeClient(int cod, String description) {
+	private EtatPayment (int cod, String description) {
+		
 		this.cod = cod;
 		this.description = description;
 	}
+	
 	public int getCod() {
 		return cod;
 	}
@@ -20,21 +22,17 @@ public enum TypeClient {
 		return description;
 	}
 
-	public static TypeClient toEnum (Integer cod) {
+	public static EtatPayment toEnum (Integer cod) {
 		
 		if (cod == null) {
 			return null;
 		}
 		
-		for(TypeClient x : TypeClient.values()) {
+		for(EtatPayment x : EtatPayment.values()) {
 			if (cod.equals(x.getCod())) {
 				return x;
 			}
 		}
 		throw new IllegalArgumentException("Id invalide: " + cod);
 	}
-	
-	
-	
-
 }
