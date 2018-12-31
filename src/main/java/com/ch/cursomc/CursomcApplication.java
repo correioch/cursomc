@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.ch.cursomc.domain.Adresse;
+import com.ch.cursomc.domain.ArticleCommande;
 import com.ch.cursomc.domain.Category;
 import com.ch.cursomc.domain.Client;
 import com.ch.cursomc.domain.Commande;
@@ -21,6 +22,7 @@ import com.ch.cursomc.domain.Ville;
 import com.ch.cursomc.domain.enums.EtatPayment;
 import com.ch.cursomc.domain.enums.TypeClient;
 import com.ch.cursomc.repositories.AdresseRepository;
+import com.ch.cursomc.repositories.ArticleCommandeRepository;
 import com.ch.cursomc.repositories.CategoryRepository;
 import com.ch.cursomc.repositories.ClientRepository;
 import com.ch.cursomc.repositories.CommandeRepository;
@@ -48,6 +50,8 @@ public class CursomcApplication implements CommandLineRunner {
     private	CommandeRepository commandeRepository;
 	@Autowired
     private	PaymentRepository paymentRepository;
+	@Autowired
+    private	ArticleCommandeRepository articleCommandeRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -112,6 +116,20 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		commandeRepository.saveAll(Arrays.asList(com1, com2));
 		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
+		
+		ArticleCommande ac1 = new ArticleCommande(p1, com1	, 0.00, 1, 2000.00);
+		ArticleCommande ac2 = new ArticleCommande(p3, com1	, 0.00, 2, 80.00);
+		ArticleCommande ac3 = new ArticleCommande(p2, com2	, 100.00, 1, 800.00);
+		
+		com1.getArticle().addAll(Arrays.asList(ac1, ac2));
+		com2.getArticle().addAll(Arrays.asList(ac3));
+		
+		p1.getArticle().addAll(Arrays.asList(ac1));
+		p2.getArticle().addAll(Arrays.asList(ac3));
+		p3.getArticle().addAll(Arrays.asList(ac2));
+		
+		articleCommandeRepository.saveAll(Arrays.asList(ac1, ac2, ac3));
+		
 		
 		
 	}

@@ -2,7 +2,9 @@ package com.ch.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -34,6 +37,26 @@ public class Product implements Serializable {
 	)
 	private List <Category> categories = new ArrayList<>();
 	
+	@OneToMany(mappedBy="id.produit")
+    Set<ArticleCommande> article = new HashSet<>();
+
+    public List<Commande> getCommandes(){
+    	List<Commande> liste = new ArrayList<>();
+    	for (ArticleCommande x : article) {
+    		liste.add(x.getCommande());
+    	}
+    	return liste;
+    }
+    
+	
+	public Set<ArticleCommande> getArticle() {
+		return article;
+	}
+
+	public void setArticle(Set<ArticleCommande> article) {
+		this.article = article;
+	}
+
 	public Product() {
 	}
 
