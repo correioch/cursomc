@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Province implements Serializable{
@@ -20,7 +20,7 @@ public class Province implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nom;
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy="province")
 	List <Ville> villes = new ArrayList<>();
 	

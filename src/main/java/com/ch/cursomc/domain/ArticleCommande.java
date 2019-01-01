@@ -5,13 +5,15 @@ import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ArticleCommande implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
+	@JsonIgnore
 	@EmbeddedId
-	private ArticleComandePK id = new ArticleComandePK();
+	private ArticleComandePK id = new ArticleComandePK()	;
 	
 	private Double rabais;
 	private Integer quantite;
@@ -29,7 +31,7 @@ public class ArticleCommande implements Serializable{
 		this.quantite = quantite;
 		this.prix = prix;
 	}
-
+	@JsonIgnore
 	public Commande getCommande() {
 		return id.getCommande();
 	}

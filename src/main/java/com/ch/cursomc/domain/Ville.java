@@ -7,10 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-
 import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Ville implements Serializable{
@@ -24,7 +21,6 @@ public class Ville implements Serializable{
 	private Integer id;
 	private String nom;
 	
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="province_id")
 	private Province province;

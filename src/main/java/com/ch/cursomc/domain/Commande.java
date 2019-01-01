@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Commande implements Serializable {
 	
@@ -24,6 +26,7 @@ public class Commande implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer Id;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instant;
 	
 	@ManyToOne
