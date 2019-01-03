@@ -15,8 +15,6 @@ import com.ch.cursomc.repositories.CategoryRepository;
 import com.ch.cursomc.services.exception.DataIntegrityViolationException;
 import com.ch.cursomc.services.exception.ObjectNotFoundException;
 
-import ch.qos.logback.classic.pattern.LineSeparatorConverter;
-
 @Service
 public class CategoryService {
 
