@@ -3,9 +3,9 @@ package com.ch.cursomc.resources;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,11 +38,11 @@ public class CategoryResource implements Serializable {
 	}
 	
 	@RequestMapping( method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Category obj){
-		
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO objDto){
+		Category obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().
-				path("/(id)").buildAndExpand(obj.getId()).toUri();
+				path("/(id)").buildAndExpand(objDto.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	

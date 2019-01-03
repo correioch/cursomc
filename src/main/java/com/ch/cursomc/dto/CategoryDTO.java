@@ -1,10 +1,16 @@
 package com.ch.cursomc.dto;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.ch.cursomc.domain.Category;
 
 public class CategoryDTO {
 	
 	private Integer id;
+	@NotEmpty(message="Pas possible etre vide")
+	@Length(min=5, max=80, message="La taile doit etre entre 5 et 80 lettres")
 	private String nome;
 	
 	public CategoryDTO() {
