@@ -30,7 +30,7 @@ public class CategoryResource implements Serializable {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@RequestMapping(value = "/{pathURL}", method=RequestMethod.POST)
+	@RequestMapping( method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Category obj){
 		
 		obj = service.insert(obj);
@@ -43,6 +43,12 @@ public class CategoryResource implements Serializable {
 	public ResponseEntity<Void> update(@RequestBody Category obj, @PathVariable Integer id) {
 		obj.setId(id);
 		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 

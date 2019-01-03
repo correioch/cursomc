@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ch.cursomc.domain.Category;
 import com.ch.cursomc.repositories.CategoryRepository;
+import com.ch.cursomc.services.exception.DataIntegrityViolationException;
 import com.ch.cursomc.services.exception.ObjectNotFoundException;
 
 @Service
@@ -32,5 +33,16 @@ public class CategoryService {
 	public Category update(Category obj) {
 		find(obj.getId());
 		return repo.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		}catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityViolationException("Il n'est pas possible effacer un categorie avec produit");
+			
+		}
+	
 	}
 }
