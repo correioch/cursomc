@@ -1,5 +1,6 @@
 package com.ch.cursomc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,10 @@ public class CategoryService {
 			repo.deleteById(id);
 		}catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityViolationException("Il n'est pas possible effacer un categorie avec produit");
-			
 		}
+	}
 	
+	public List<Category> findAll(){
+		return repo.findAll();
 	}
 }
