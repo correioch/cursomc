@@ -51,7 +51,7 @@ public class Client implements Serializable {
 		this.nom = nom;
 		this.email = email;
 		this.codIdentification = codIdentification;
-		this.typeClient = typeClient.getCod();
+		this.typeClient = (typeClient==null) ? null : typeClient.getCod();
 	}
 
 	public List<Commande> getCommandes() {
